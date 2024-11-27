@@ -126,3 +126,6 @@ The application will be available at `http://127.0.0.1:3000`
 - ChromaDB for vector storage
 - FastAPI for the backend framework
 - React for the frontend framework
+
+Sqlite database from
+https://github.com/lerocha/chinook-database
