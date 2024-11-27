@@ -1,0 +1,15 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+AZURE_API_KEY = os.getenv("AZURE_API_KEY")
+AZURE_ENDPOINT = os.getenv("AZURE_ENDPOINT")
+AZURE_API_VERSION = os.getenv("AZURE_API_VERSION")
+AZURE_DEPLOYMENT_NAME = os.getenv("AZURE_DEPLOYMENT_NAME")
+
+CHROMADB_DIR = os.getenv("CHROMADB_DIR")
+CHROMADB_COLLECTION_NAME = os.getenv("CHROMADB_COLLECTION_NAME")
+
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200
