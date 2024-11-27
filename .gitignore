@@ -1,0 +1,16 @@
+*.pyc
+__pycache__/
+
+.python-version
+.venv/
+
+.pytest_cache/
+report.xml
+
+.vscode/
+.idea/
+
+node_modules
+
+.env
+
