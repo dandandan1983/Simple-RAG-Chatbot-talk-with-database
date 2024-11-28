@@ -8,6 +8,7 @@ const ChatbotUI = () => {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState('');
+  const [hoveredDebug, setHoveredDebug] = useState(null);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -67,7 +68,7 @@ const ChatbotUI = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: data.response, debug_response: data.debug_response || 'No debug info available' }]);
       } else {
         setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error.' }]);
       }
@@ -110,7 +111,7 @@ const ChatbotUI = () => {
       <Card className="flex-1 flex flex-col">
         <CardHeader>
           <CardTitle className="flex justify-between items-center">
-            <span>RAG Chatbot</span>
+            <span>Database RAG Chatbot</span>
             <button
               onClick={handleDelete}
               className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
@@ -151,13 +152,23 @@ const ChatbotUI = () => {
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
+                  className={`relative max-w-[80%] rounded-lg p-3 ${
                     message.role === 'user'
                       ? 'bg-blue-500 text-white'
                       : 'bg-gray-100 text-gray-900'
                   }`}
+                  style={{ whiteSpace: 'pre-wrap' }}
+                  onDoubleClick={() => setHoveredDebug(index)}
+                  onClick={() => setHoveredDebug(null)}
                 >
                   {message.content}
+            {hoveredDebug === index && message.debug_response && (
+              <div
+                className="relative left-full ml-2 p-2 bg-white border border-gray-300 rounded shadow-lg z-[10000]"
+                style={{ whiteSpace: 'pre-wrap' }}
+                dangerouslySetInnerHTML={{ __html: message.debug_response.replace(/\n/g, '<br>') }}
+              />
+            )}
                 </div>
               </div>
             ))}

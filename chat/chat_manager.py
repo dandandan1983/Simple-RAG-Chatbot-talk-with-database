@@ -34,7 +34,7 @@ class ChatManager:
             model=self._deployment_name,
             messages=messages,
             temperature=0.1,
-            max_tokens=80
+            max_tokens=1000
         )
         # Update conversation history
         self.conversation_history.append({"role": "user", "content": query})
@@ -45,8 +45,11 @@ class ChatManager:
     def get_sql_response(self, query, results_list):
         text_query = """You are a helpful sqlite assistant. You can work with SQL Queries, generate SQL queries.
                         Answer questions based only on the provided context. All users question is about database.
+                        Take a look foreign keys for tables and how do they related.
+                        Add Distinct to the query if it doesn't crash query.
                         If you're unsure or the context doesn't contain the information just return False otherwise
-                        return just SQL query. No need to send any additional text!"""
+                        return just SQL query. No need to send any additional text!
+                        Just send SQL query or False !!!"""
 
         response = self.generate_response(
             query,

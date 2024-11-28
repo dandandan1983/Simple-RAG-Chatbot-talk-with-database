@@ -81,16 +81,16 @@ async def query_documents(request: QueryRequest):
 
 
         is_it_sql = chat_manager.check_sql_response(sql_response, list())
-        debug_response += "\n It is SQL: " + is_it_sql
+        debug_response += "\n\n It is SQL: " + is_it_sql
         if str(is_it_sql) == "False":
             return {"response": "SQL query was not generated or it was hacked query.", "debug_response": debug_response}
 
 
         sql_result_text = execute_query(SQLITE_PATH, sql_response)
-        debug_response += "\n" + sql_result_text
+        debug_response += "\n\n" + sql_result_text
 
         response_text = chat_manager.get_answer(request.query, [sql_result_text])
-        debug_response += "\n" + response_text
+        # debug_response += "\n\n" + response_text
 
         return {"response": response_text, "debug_response": debug_response}
     except openai.APITimeoutError:
