@@ -18,4 +18,5 @@ def chunk_text(text):
         length_function=len
     )
     chunks = text_splitter.split_text(text)
+    print("pdf_chunks", chunks)
     return chunks
